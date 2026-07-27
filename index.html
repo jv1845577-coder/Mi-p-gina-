@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Sorpresa para ti, mi amor ✨</title>
+
+    <style>
+        /* ========== GOOGLE FONTS ========== */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --pink-light: #ffb3c6;
+            --pink: #ff6b8a;
+            --pink-dark: #d90452;
+            --white: #ffffff;
+            --gold: #f4c542;
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --shadow-deep: 0 25px 60px rgba(0, 0, 0, 0.5);
+            --radius-xl: 48px;
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-sm: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 0%, #3d0030 0%, #1a0015 60%, #0a000a 100%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 10px 60px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ========== FONDO DE PARTÍCULAS Y CORAZONES FLOTANTES ========== */
+        .particles-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart,
+        .floating-particle {
+            position: absolute;
+            animation: floatUp 10s linear infinite;
+            opacity: 0;
+            will-change: transform;
+        }
+
+        .floating-heart {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 8px rgba(255, 100, 150, 0.7));
+        }
+
+        .floating-particle {
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #ffb3c6 0%, transparent 80%);
+            border-radius: 50%;
+            box-shadow: 0 0 14px #ff6b8a;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) scale(0);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.9;
+            }
+            35% {
+                transform: translateY(65vh) translateX(25px) scale(1.1);
+                opacity: 0.7;
+            }
+            70% {
+                transform: translateY(25vh) translateX(-18px) scale(0.8);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-15vh) translateX(12px) scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        /* ========== PANTALLA DE BIENVENIDA ========== */
+        .welcome-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #2a0020 0%, #0e000a 100%);
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-btn {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            font-weight: 700;
+            padding: 1.4rem 3.2rem;
+            border: none;
+            border-radius: 80px;
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 50px rgba(255, 70, 100, 0.7), 0 10px 30px rgba(0, 0, 0, 0.4);
+            letter-spacing: 2px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+            animation: gentlePulse 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .welcome-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 70px rgba(255, 80, 120, 0.9), 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        @keyframes gentlePulse {
+            0%,
+            100% {
+                box-shadow: 0 0 40px rgba(255, 70, 100, 0.6), 0 10px 30px rgba(0, 0, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 70px rgba(255, 100, 140, 0.9), 0 15px 40px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        .welcome-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            color: #ffccd5;
+            margin-top: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 550px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--glass-border);
+            box-shadow: var(--shadow-deep), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            padding: 2rem 1.5rem 2.5rem;
+            margin: 20px 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .title-wrapper {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b8a, #ffffff, #ffb3c6, #ffffff, #ff6b8a);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s ease-in-out infinite;
+            text-align: center;
+            line-height: 1.2;
+            filter: drop-shadow(0 2px 8px rgba(255, 107, 138, 0.5));
+        }
+
+        @keyframes shimmer {
+            0%,
+            100% {
+                background-position: 0% center;
+            }
+            50% {
+                background-position: 100% center;
+            }
+        }
+
+        .subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--pink-light);
+            text-align: center;
+            margin-bottom: 5px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .dedication {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        /* ========== TARJETAS DE RASCADO ========== */
+        .scratch-cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .scratch-card {
+            position: relative;
+            width: 100%;
+            min-height: 380px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .scratch-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        .card-hidden-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px 130px;
+            z-index: 1;
+        }
+
+        .card-hidden-content .prize-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .card-hidden-content .prize-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--white);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .card-hidden-content .prize-hint {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            touch-action: none;
+            transition: opacity 0.7s ease;
+        }
+
+        .scratch-canvas.faded {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .claim-btn {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            z-index: 3;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            background: linear-gradient(135deg, #ff4d7d, #d90452);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(217, 4, 82, 0.5);
+            letter-spacing: 0.5px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .claim-btn.visible {
+            transform: translateX(-50%) scale(1);
+            animation: pulse-btn 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-btn {
+            0%,
+            100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 6px 20px rgba(217, 4, 82, 0.5);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.08);
+                box-shadow: 0 10px 30px rgba(255, 77, 125, 0.7);
+            }
+        }
+
+        .claim-btn:hover {
+            box-shadow: 0 10px 30px rgba(255, 77, 125, 0.8);
+        }
+        .claim-btn:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .unlock-message {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: #fff;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.5s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .unlock-message.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            animation: soft-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes soft-glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #ff6b8a;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #ff4d7d, 0 0 30px #ff6b8a;
+            }
+        }
+
+        /* ========== MODALES ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: linear-gradient(160deg, rgba(40, 10, 50, 0.96), rgba(25, 5, 35, 0.96));
+            border: 2px solid rgba(255, 107, 138, 0.5);
+            border-radius: var(--radius-xl);
+            padding: 2rem 1.5rem;
+            width: 100%;
+            max-width: 520px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 107, 138, 0.2);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease, background 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 77, 125, 0.45);
+        }
+
+        .modal-content h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--pink-light);
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        /* Video local */
+        .video-local {
+            width: 100%;
+            border-radius: 20px;
+            margin: 10px 0 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            outline: none;
+        }
+
+        .audio-description {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .audio-final-msg {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--pink-light);
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* Sobre animado */
+        .envelope-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .envelope {
+            position: relative;
+            width: 180px;
+            height: 120px;
+            cursor: pointer;
+            perspective: 800px;
+            margin-bottom: 8px;
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 85%;
+            background: linear-gradient(160deg, #f5e6d3, #e8d5bc);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            z-index: 2;
+            border: 2px solid #d4b896;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            z-index: 4;
+            clip-path: polygon(0% 0%, 50% 70%, 100% 0%);
+            background: linear-gradient(160deg, #f7ead9, #dfc8a8);
+            transform-origin: top center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid #d4b896;
+        }
+
+        .envelope-flap.open {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ff4d7d, #c9184a);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 2px 8px rgba(200, 30, 70, 0.5);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .envelope-seal.hidden-seal {
+            opacity: 0;
+        }
+
+        .letter-inside {
+            position: absolute;
+            bottom: 0;
+            left: 8px;
+            right: 8px;
+            height: 75%;
+            background: #fffef9;
+            border-radius: 4px;
+            z-index: 1;
+            transform: translateY(0);
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            padding: 8px 6px;
+        }
+
+        .letter-inside.extracted {
+            transform: translateY(-110%);
+        }
+
+        .letter-mini-text {
+            font-family: 'Caveat', cursive;
+            font-size: 0.55rem;
+            color: #4a3728;
+            line-height: 1.2;
+            text-align: left;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+        }
+
+        .envelope-hint {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        .full-letter-content {
+            display: none;
+            background: #fffef9;
+            border-radius: var(--radius-sm);
+            padding: 20px 18px;
+            margin-top: 16px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: #3d2b1f;
+            line-height: 1.6;
+            max-height: 350px;
+            overflow-y: auto;
+            border: 1px solid #e0d5c5;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .full-letter-content.visible {
+            display: block;
+            animation: fadeInUpLetter 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUpLetter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .poem-container {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .poem-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #fffef9;
+            line-height: 2;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .poem-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--pink-light);
+            margin-top: 16px;
+            font-weight: 600;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 20px 14px 30px;
+                border-radius: 30px;
+                margin-top: 10px;
+            }
+
+            .main-title {
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            .dedication {
+                font-size: 1rem;
+            }
+
+            .scratch-card {
+                min-height: 320px;
+                border-radius: 18px;
+            }
+
+            .card-hidden-content {
+                padding: 25px 16px 110px;
+            }
+
+            .card-hidden-content .prize-icon {
+                font-size: 2.2rem;
+            }
+            .card-hidden-content .prize-title {
+                font-size: 1.3rem;
+            }
+
+            .claim-btn {
+                font-size: 0.8rem;
+                padding: 10px 20px;
+                bottom: 20px;
+            }
+
+            .unlock-message {
+                bottom: 90px;
+                font-size: 1.1rem;
+                padding: 6px 14px;
+            }
+
+            .modal-content {
+                padding: 22px 16px;
+                max-width: 95%;
+                border-radius: 28px;
+            }
+            .modal-content h3 {
+                font-size: 1.6rem;
+            }
+
+            .envelope {
+                width: 140px;
+                height: 95px;
+            }
+
+            .poem-text {
+                font-size: 1.15rem;
+                line-height: 1.8;
+            }
+
+            .full-letter-content {
+                font-size: 0.95rem;
+                padding: 14px 12px;
+                max-height: 280px;
+            }
+
+            .welcome-btn {
+                font-size: 2.2rem;
+                padding: 1rem 2.2rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            .scratch-card {
+                min-height: 300px;
+            }
+            .card-hidden-content .prize-title {
+                font-size: 1.1rem;
+            }
+            .envelope {
+                width: 120px;
+                height: 82px;
+            }
+        }
+
+        .modal-content::-webkit-scrollbar,
+        .full-letter-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .modal-content::-webkit-scrollbar-track,
+        .full-letter-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-content::-webkit-scrollbar-thumb,
+        .full-letter-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 138, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Partículas y corazones flotantes -->
+    <div class="particles-layer" id="particlesLayer" aria-hidden="true"></div>
+
+    <!-- Pantalla de bienvenida -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <button class="welcome-btn" id="startBtn">❤️ Iniciar, mi amor ❤️</button>
+        <p class="welcome-subtitle">Preparé una pequeña sorpresa para ti...</p>
+    </div>
+
+    <!-- Música de fondo -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="minecraft-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Contenedor principal (oculto hasta pulsar el botón) -->
+    <main class="main-container" id="mainContainer" style="opacity: 0;">
+        <div class="title-wrapper">
+            <h1 class="main-title">✨ Para Esme ✨</h1>
+        </div>
+        <p class="subtitle">Mi niña preciosa, mi corazón</p>
+        <p class="dedication">💛 Rasca UNAAAA tarjeta y descubre tu regalo 💛</p>
+
+        <div class="scratch-cards-wrapper">
+
+            <!-- ===== TARJETA 1: Video ===== -->
+            <div class="scratch-card" id="card1">
+                <div class="card-hidden-content">
+                    <span class="prize-icon">🎵</span>
+                    <span class="prize-title">Nuestra Canción</span>
+                    <span class="prize-hint">Un video que guarda nuestro ritmo</span>
+                </div>
+                <canvas class="scratch-canvas" id="canvas1" data-card="1"></canvas>
+                <div class="unlock-message" id="unlockMsg1">✨ Has desbloqueado nuestra canción ✨</div>
+                <button class="claim-btn" id="claimBtn1" data-modal="modal1">❤️ Estoy lista para escucharla...</button>
+            </div>
+
+            <!-- ===== TARJETA 2: Carta de amor ===== -->
+            <div class="scratch-card" id="card2">
+                <div class="card-hidden-content">
+                    <span class="prize-icon">💌</span>
+                    <span class="prize-title">Carta de Amor</span>
+                    <span class="prize-hint">Palabras que guardo para ti</span>
+                </div>
+                <canvas class="scratch-canvas" id="canvas2" data-card="2"></canvas>
+                <button class="claim-btn" id="claimBtn2" data-modal="modal2">🎁 Reclamar premio</button>
+            </div>
+
+            <!-- ===== TARJETA 3: Poema exclusivo ===== -->
+            <div class="scratch-card" id="card3">
+                <div class="card-hidden-content">
+                    <span class="prize-icon">📝</span>
+                    <span class="prize-title">Poema Exclusivo</span>
+                    <span class="prize-hint">Versos que nacen de mi alma</span>
+                </div>
+                <canvas class="scratch-canvas" id="canvas3" data-card="3"></canvas>
+                <button class="claim-btn" id="claimBtn3" data-modal="modal3">🎁 Reclamar premio</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================================
+    MODAL 1: VIDEO LOCAL
+    ============================================================ -->
+    <div class="modal-overlay" id="modal1" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close-btn" data-close="modal1" aria-label="Cerrar">✕</button>
+            <h3>🎵 Nuestra Canción</h3>
+            <video id="videoPlayer" class="video-local" controls playsinline>
+                <source src="sub-espanol.mp4" type="video/mp4">
+                Tu navegador no soporta videos. 💔
+            </video>
+            <p class="audio-description">
+                "Cada nota de esta canción me recuerda por qué tú eres mi melodía favorita."
+            </p>
+            <p class="audio-final-msg">Dale play y siente cómo late mi corazón por ti ❤️</p>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL 2: CARTA DE AMOR CON SOBRE ANIMADO
+    ============================================================ -->
+    <div class="modal-overlay" id="modal2" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close-btn" data-close="modal2" aria-label="Cerrar">✕</button>
+            <h3>💌 Carta de Amor</h3>
+            <div class="envelope-wrapper" id="envelopeWrapper">
+                <div class="envelope" id="envelopeEl">
+                    <div class="envelope-flap" id="envelopeFlap"></div>
+                    <div class="envelope-seal" id="envelopeSeal">❤️</div>
+                    <div class="envelope-body">
+                        <div class="letter-inside" id="letterInside">
+                            <p class="letter-mini-text">
+                                Mi niña bonita, mi princesa… ❤️ Toca el sobre para leer la carta completa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <p class="envelope-hint">✨ Toca el sobre para abrirlo y leer la carta ✨</p>
+            </div>
+            <div class="full-letter-content" id="fullLetterContent">
+                Mi niña bonita, mi princesa, mi bebé, mi corazón:
+                Hay una palabra que descubrí hace poco: querencia. Es el lugar o la persona hacia la que el corazón siempre quiere volver. Creo que, sin darte cuenta, te has convertido un poquito en mi querencia. Hay días en los que solo quiero terminar todo para volver a encontrarte entre tus mensajes y sentir esa tranquilidad tan rara y tan bonita que me das.
+
+                También existe otra palabra preciosa: saudade. No es exactamente extrañar. Es echar de menos algo que, incluso estando lejos, sigue haciéndote feliz. Y creo que eso me pasa contigo. Me haces falta incluso cuando sé que estás ocupada. Es una ausencia que no duele; solo me recuerda las ganas que tengo de volver a leerte.
+
+                ¿Sabes qué me hace ilusión? Lo cotidiano. Imaginarte sentada en la cocina mientras preparo algo para nosotros. Tú diciéndome que ya tienes hambre y yo respondiéndote que todavía no está listo... aunque, siendo sincero, creo que el verdadero problema sería decidir si primero nos comemos la comida... o si me dejas comerte a besos un ratito.
+
+                Y es curioso, porque nunca imaginé que alguien pudiera gustarme tanto sin haber compartido tantas cosas "normales". Aun así, siento que te conozco en los lugares importantes: en tu manera de pensar, en cómo cuidas tus palabras, en tu voz, que me parece absurdamente hermosa, y en esa forma tan tuya de hacerme sentir cerca incluso cuando estamos a kilómetros de distancia.
+
+                Hay otra palabra que quiero regalarte: hiraeth. Habla de sentir nostalgia por un hogar al que quizá nunca se ha pertenecido. Me gusta pensar que algún día dejará de ser solo una palabra y se convertirá en esa sensación de llegar a casa después de un día pesado... y encontrarte a ti. Preguntarte cómo estuvo tu día, darte un beso distraído mientras termino de cocinar y discutir, solo por molestar, sobre quién lava los trastes. Aunque sospecho que terminaría convenciéndote de que el postre eres tú... y que ese sí me gustaría disfrutarlo sin prisas.
+
+                No quiero que olvides algo, aunque pasen los días. Te quiero. Muchísimo. No porque seas perfecta, sino porque eres tú. Porque me gusta la mujer que estoy descubriendo detrás de cada conversación. Porque haces que quiera escribirte, cuidarte, hacerte reír y consentirte. Porque me nace.
+
+                Y si algún día la vida nos pone uno frente al otro, no prometo hacer el mejor platillo del mundo. Lo que sí prometo es cocinarlo con todo el cariño posible, sentarme contigo, mirarte de vez en cuando en lugar del plato, robarte un beso cuando menos te lo esperes y volver a pensar lo mismo que pienso cada noche antes de dormir: qué bonito fue haberte encontrado. ❤️
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL 3: POEMA EXCLUSIVO
+    ============================================================ -->
+    <div class="modal-overlay" id="modal3" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close-btn" data-close="modal3" aria-label="Cerrar">✕</button>
+            <h3>📝 Poema Exclusivo</h3>
+            <div class="poem-container">
+                <p class="poem-text">
+                    En el jardín de mis sueños,<br>
+                    floreciste sin aviso,<br>
+                    con la luz de tus ojitos<br>
+                    y el calor de tu sonrisa.<br><br>
+                    Eres versos en mi pecho,<br>
+                    melodía sin final,<br>
+                    la razón de cada latido,<br>
+                    mi más dulce y bello mal.<br><br>
+                    Quiero escribirte mil poemas,<br>
+                    cantarte al amanecer,<br>
+                    y que sepas que en la vida,<br>
+                    solo tú eres mi querer.
+                </p>
+                <p class="poem-signature">— Con todo mi amor, para ti. ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            console.log('✨ Cargando sorpresa romántica...');
+
+            // ========== ELEMENTOS ==========
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const startBtn = document.getElementById('startBtn');
+            const mainContainer = document.getElementById('mainContainer');
+            const bgMusic = document.getElementById('bgMusic');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const particlesLayer = document.getElementById('particlesLayer');
+            const modalOverlays = document.querySelectorAll('.modal-overlay');
+            const claimButtons = document.querySelectorAll('.claim-btn');
+            const closeButtons = document.querySelectorAll('.modal-close-btn');
+            const canvases = document.querySelectorAll('.scratch-canvas');
+
+            if (!welcomeScreen || !startBtn) {
+                console.error('Error: No se encontró la pantalla de bienvenida.');
+                return;
+            }
+
+            // ========== SONIDO DE RASCADO MEJORADO ==========
+            let audioCtx = null;
+
+            function initAudioContext() {
+                try {
+                    if (!audioCtx) {
+                        audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                } catch (e) {
+                    console.warn('Web Audio API no disponible');
+                }
+            }
+
+            function playScratchSound() {
+                if (!audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const duration = 0.06 + Math.random() * 0.06;
+                    const bufferSize = Math.floor(audioCtx.sampleRate * duration);
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = (Math.random() * 2 - 1) * 0.4;
+                    }
+                    const source = audioCtx.createBufferSource();
+                    source.buffer = buffer;
+                    const gainNode = audioCtx.createGain();
+                    const vol = 0.1 + Math.random() * 0.15;
+                    gainNode.gain.setValueAtTime(vol, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 700 + Math.random() * 1400;
+                    filter.Q.value = 0.7;
+                    source.connect(filter);
+                    filter.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    source.start(now);
+                    source.stop(now + duration);
+                } catch (e) {}
+            }
+
+            // ========== PARTÍCULAS Y CORAZONES ==========
+            const heartsSet = ['❤️', '💕', '💖', '💗', '💘', '✨', '💫', '🌟', '🌹', '💐'];
+
+            function createFloatingElement() {
+                const el = document.createElement('span');
+                const isHeart = Math.random() < 0.65;
+                if (isHeart) {
+                    el.classList.add('floating-heart');
+                    el.textContent = heartsSet[Math.floor(Math.random() * heartsSet.length)];
+                    el.style.fontSize = (Math.random() * 2.4 + 1) + 'rem';
+                } else {
+                    el.classList.add('floating-particle');
+                    const size = Math.random() * 8 + 2;
+                    el.style.width = size + 'px';
+                    el.style.height = size + 'px';
+                }
+                el.style.left = Math.random() * 100 + '%';
+                el.style.animationDuration = (Math.random() * 9 + 7) + 's';
+                el.style.animationDelay = Math.random() * 6 + 's';
+                particlesLayer.appendChild(el);
+                setTimeout(() => el.remove(), 16000);
+            }
+
+            // Menos partículas para móviles
+            const initialParticles = window.innerWidth < 600 ? 15 : 25;
+            for (let i = 0; i < initialParticles; i++) createFloatingElement();
+            setInterval(createFloatingElement, 1500);
+
+            // ========== PANTALLA DE BIENVENIDA ==========
+            startBtn.addEventListener('click', () => {
+                welcomeScreen.classList.add('hidden');
+                mainContainer.style.opacity = '1';
+                initAudioContext();
+                if (bgMusic) {
+                    bgMusic.volume = 0;
+                    bgMusic.play().then(() => {
+                        let vol = 0;
+                        const fadeIn = setInterval(() => {
+                            vol += 0.006;
+                            if (vol >= 0.3) {
+                                vol = 0.3;
+                                clearInterval(fadeIn);
+                            }
+                            bgMusic.volume = vol;
+                        }, 40);
+                    }).catch(() => console.log('La música de fondo necesita un gesto del usuario.'));
+                }
+            });
+
+            // ========== CONTROL DE MÚSICA CON VIDEO ==========
+            if (videoPlayer) {
+                videoPlayer.addEventListener('play', () => {
+                    if (!bgMusic) return;
+                    let vol = bgMusic.volume;
+                    const fadeOut = setInterval(() => {
+                        vol -= 0.02;
+                        if (vol <= 0) {
+                            vol = 0;
+                            clearInterval(fadeOut);
+                        }
+                        bgMusic.volume = vol;
+                    }, 50);
+                });
+                videoPlayer.addEventListener('pause', () => {
+                    if (!bgMusic || !videoPlayer.ended) {
+                        let vol = bgMusic.volume;
+                        const fadeIn = setInterval(() => {
+                            vol += 0.02;
+                            if (vol >= 0.3) {
+                                vol = 0.3;
+                                clearInterval(fadeIn);
+                            }
+                            bgMusic.volume = vol;
+                        }, 50);
+                    }
+                });
+                videoPlayer.addEventListener('ended', () => {
+                    if (!bgMusic) return;
+                    let vol = bgMusic.volume;
+                    const fadeIn = setInterval(() => {
+                        vol += 0.02;
+                        if (vol >= 0.3) {
+                            vol = 0.3;
+                            clearInterval(fadeIn);
+                        }
+                        bgMusic.volume = vol;
+                    }, 50);
+                });
+            }
+
+            // ========== RASCADO ==========
+            const scratchStates = new Map();
+
+            function initCanvas(canvas) {
+                const card = canvas.parentElement;
+                const ctx = canvas.getContext('2d');
+                const dpr = window.devicePixelRatio || 1;
+                scratchStates.set(canvas.id, { ctx, isRevealed: false, dpr });
+
+                function resizeAndRedraw() {
+                    const rect = card.getBoundingClientRect();
+                    const w = rect.width, h = rect.height;
+                    if (w <= 0 || h <= 0) return;
+                    canvas.width = w * dpr;
+                    canvas.height = h * dpr;
+                    canvas.style.width = w + 'px';
+                    canvas.style.height = h + 'px';
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.scale(dpr, dpr);
+                    const gradient = ctx.createLinearGradient(0, 0, w, h);
+                    gradient.addColorStop(0, '#d90429');
+                    gradient.addColorStop(0.5, '#b20728');
+                    gradient.addColorStop(1, '#800f2f');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, w, h);
+                    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                    ctx.font = "600 15px 'Poppins', sans-serif";
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('✨ Rasca aquí con tu dedo ✨', w / 2, h / 2 - 6);
+                    ctx.font = '13px sans-serif';
+                    ctx.fillText('🌸🌺🌷', w / 2, h / 2 + 28);
+                }
+
+                resizeAndRedraw();
+                new ResizeObserver(() => {
+                    if (!scratchStates.get(canvas.id)?.isRevealed) resizeAndRedraw();
+                }).observe(card);
+            }
+
+            canvases.forEach(initCanvas);
+
+            function getPos(e, canvas) {
+                const rect = canvas.getBoundingClientRect();
+                let cx, cy;
+                if (e.touches) {
+                    cx = e.touches[0]?.clientX || e.changedTouches[0]?.clientX;
+                    cy = e.touches[0]?.clientY || e.changedTouches[0]?.clientY;
+                } else {
+                    cx = e.clientX;
+                    cy = e.clientY;
+                }
+                return { x: cx - rect.left, y: cy - rect.top };
+            }
+
+            function scratch(canvas, pos) {
+                const state = scratchStates.get(canvas.id);
+                if (!state || state.isRevealed) return;
+                const ctx = state.ctx, dpr = state.dpr;
+                ctx.save();
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 30, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 0.5;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 40, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+                playScratchSound();
+            }
+
+            function calcPercentage(canvas) {
+                const state = scratchStates.get(canvas.id);
+                if (!state || state.isRevealed) return 100;
+                const imageData = state.ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let transparent = 0;
+                for (let i = 3; i < imageData.data.length; i += 16) {
+                    if (imageData.data[i] === 0) transparent++;
+                }
+                return (transparent / Math.ceil(imageData.data.length / 16)) * 100;
+            }
+
+            function revealCard(canvas) {
+                const state = scratchStates.get(canvas.id);
+                if (!state || state.isRevealed) return;
+                state.isRevealed = true;
+                canvas.classList.add('faded');
+                const card = canvas.parentElement;
+                const claimBtn = card.querySelector('.claim-btn');
+                if (canvas.id === 'canvas1') {
+                    const unlockMsg = document.getElementById('unlockMsg1');
+                    if (unlockMsg) setTimeout(() => unlockMsg.classList.add('visible'), 200);
+                }
+                if (claimBtn) {
+                    setTimeout(() => claimBtn.classList.add('visible'), canvas.id === 'canvas1' ? 500 : 400);
+                }
+            }
+
+            let activeCanvas = null;
+            canvases.forEach(canvas => {
+                canvas.addEventListener('mousedown', e => {
+                    if (scratchStates.get(canvas.id)?.isRevealed) return;
+                    activeCanvas = canvas;
+                    scratch(canvas, getPos(e, canvas));
+                });
+                canvas.addEventListener('mousemove', e => {
+                    if (activeCanvas !== canvas || scratchStates.get(canvas.id)?.isRevealed) return;
+                    scratch(canvas, getPos(e, canvas));
+                    if (Math.random() < 0.08 && calcPercentage(canvas) > 45) revealCard(canvas);
+                });
+                canvas.addEventListener('mouseup', () => {
+                    if (activeCanvas === canvas && !scratchStates.get(canvas.id)?.isRevealed && calcPercentage(canvas) > 45) revealCard(canvas);
+                    activeCanvas = null;
+                });
+                canvas.addEventListener('mouseleave', () => {
+                    if (activeCanvas === canvas && !scratchStates.get(canvas.id)?.isRevealed && calcPercentage(canvas) > 45) revealCard(canvas);
+                    activeCanvas = null;
+                });
+                canvas.addEventListener('touchstart', e => {
+                    if (scratchStates.get(canvas.id)?.isRevealed) return;
+                    e.preventDefault();
+                    activeCanvas = canvas;
+                    scratch(canvas, getPos(e, canvas));
+                }, { passive: false });
+                canvas.addEventListener('touchmove', e => {
+                    if (activeCanvas !== canvas || scratchStates.get(canvas.id)?.isRevealed) return;
+                    e.preventDefault();
+                    scratch(canvas, getPos(e, canvas));
+                    if (Math.random() < 0.08 && calcPercentage(canvas) > 45) revealCard(canvas);
+                }, { passive: false });
+                canvas.addEventListener('touchend', () => {
+                    if (activeCanvas === canvas && !scratchStates.get(canvas.id)?.isRevealed && calcPercentage(canvas) > 45) revealCard(canvas);
+                    activeCanvas = null;
+                });
+                canvas.addEventListener('touchcancel', () => {
+                    if (activeCanvas === canvas && !scratchStates.get(canvas.id)?.isRevealed && calcPercentage(canvas) > 45) revealCard(canvas);
+                    activeCanvas = null;
+                });
+            });
+            document.addEventListener('mouseup', () => { activeCanvas = null; });
+
+            // ========== MODALES ==========
+            function openModal(id) {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                if (id === 'modal2') {
+                    resetEnvelope();
+                    setTimeout(openEnvelope, 400);
+                }
+                if (id === 'modal1' && videoPlayer) {
+                    videoPlayer.play().catch(() => console.log('El video necesita interacción.'));
+                }
+            }
+
+            function closeModal(id) {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                if (id === 'modal2') resetEnvelope();
+                if (id === 'modal1' && videoPlayer) {
+                    videoPlayer.pause();
+                }
+            }
+
+            claimButtons.forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    openModal(btn.dataset.modal);
+                });
+            });
+
+            closeButtons.forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    closeModal(btn.dataset.close);
+                });
+            });
+
+            modalOverlays.forEach(overlay => {
+                overlay.addEventListener('click', e => {
+                    if (e.target === overlay) closeModal(overlay.id);
+                });
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const active = document.querySelector('.modal-overlay.active');
+                    if (active) closeModal(active.id);
+                }
+            });
+
+            // ========== SOBRE ANIMADO ==========
+            const envelopeFlap = document.getElementById('envelopeFlap');
+            const envelopeSeal = document.getElementById('envelopeSeal');
+            const letterInside = document.getElementById('letterInside');
+            const fullLetter = document.getElementById('fullLetterContent');
+            const envelopeEl = document.getElementById('envelopeEl');
+            let isOpen = false;
+
+            function openEnvelope() {
+                if (isOpen) return;
+                isOpen = true;
+                envelopeFlap?.classList.add('open');
+                envelopeSeal?.classList.add('hidden-seal');
+                letterInside?.classList.add('extracted');
+                setTimeout(() => fullLetter?.classList.add('visible'), 600);
+            }
+
+            function resetEnvelope() {
+                isOpen = false;
+                envelopeFlap?.classList.remove('open');
+                envelopeSeal?.classList.remove('hidden-seal');
+                letterInside?.classList.remove('extracted');
+                fullLetter?.classList.remove('visible');
+            }
+
+            envelopeEl?.addEventListener('click', e => {
+                e.stopPropagation();
+                if (!isOpen) openEnvelope();
+                else { resetEnvelope();
+                    setTimeout(openEnvelope, 300); }
+            });
+
+            console.log('💖 Sorpresa romántica lista para Esme. ¡A disfrutar!');
+        })();
+    </script>
+</body>
+</html>
